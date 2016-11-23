@@ -1,0 +1,23 @@
+version: '2'
+services:
+    application:
+        image: alpine
+        volumes:
+            - .:/var/www/aprr
+        command: 'ls /dev/null'
+
+    phantomjs:
+        build: ./phantomjs/
+        expose:
+            - 8643
+        ports:
+            - 4444:8643
+        volumes_from:
+            - application
+        networks:
+            aprr:
+                aliases:
+                    - service.phantomjs
+
+networks:
+    aprr: {}

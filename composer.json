@@ -1,0 +1,25 @@
+{
+    "name": "delphiki/aprr",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "facebook/webdriver": "^1.2"
+    },
+    "authors": [
+        {
+            "name": "Julien Villetorte",
+            "email": "j.villetorte@gmail.com",
+            "homepage": "http://www.delphiki.com",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "type": "library",
+    "description": "A simple crawler to get formated data from APRR website.",
+    "keywords": ["aprr", "area", "télépéage", "autoroute", "crawler"],
+    "autoload": {
+        "psr-0": {
+            "Aprr": "src/"
+        }
+    }
+}
