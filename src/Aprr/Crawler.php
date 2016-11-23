@@ -32,10 +32,25 @@ class Crawler implements \JsonSerializable
     /** @var User */
     private $user;
 
+    /**
+     * Crawler constructor.
+     * @param string $hub
+     */
     public function __construct($hub = 'http://localhost:4444/wd/hub')
     {
         $this->hub = $hub;
-        $this->driver = RemoteWebDriver::create($this->hub, DesiredCapabilities::firefox());
+
+        $this->init();
+    }
+
+    /**
+     * Init the WebDriver
+     */
+    private function init()
+    {
+        if ($this->getHub()) {
+            $this->setDriver(RemoteWebDriver::create($this->hub, DesiredCapabilities::firefox()));
+        }
     }
 
     /**
@@ -48,10 +63,15 @@ class Crawler implements \JsonSerializable
 
     /**
      * @param string $hub
+     * @return Crawler
      */
     public function setHub($hub)
     {
         $this->hub = $hub;
+
+        $this->init();
+
+        return $this;
     }
 
     /**
@@ -64,10 +84,13 @@ class Crawler implements \JsonSerializable
 
     /**
      * @param RemoteWebDriver $driver
+     * @return Crawler
      */
     public function setDriver($driver)
     {
         $this->driver = $driver;
+
+        return $this;
     }
 
     /**
@@ -80,10 +103,13 @@ class Crawler implements \JsonSerializable
 
     /**
      * @param array $contracts
+     * @return Crawler
      */
     public function setContracts($contracts)
     {
         $this->contracts = $contracts;
+
+        return $this;
     }
 
     /**
@@ -96,10 +122,13 @@ class Crawler implements \JsonSerializable
 
     /**
      * @param array $badges
+     * @return Crawler
      */
     public function setBadges($badges)
     {
         $this->badges = $badges;
+
+        return $this;
     }
 
     /**
@@ -147,6 +176,7 @@ class Crawler implements \JsonSerializable
 
     /**
      * Loads the user info from header
+     * @param string $clientId
      */
     protected function loadUserInfo($clientId)
     {
@@ -205,7 +235,7 @@ class Crawler implements \JsonSerializable
 
     /**
      * @param string    $selectId
-     * @param Selection $item
+     * @param Selection $selection
      * @return Selection
      */
     private function getPendingBills($selectId, Selection $selection)
