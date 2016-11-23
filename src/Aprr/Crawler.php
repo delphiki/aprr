@@ -165,7 +165,7 @@ class Crawler implements \JsonSerializable
 
         $this->driver->findElement(WebDriverBy::id('ctl00_PlaceHolderMain_ImageButtonConnection'))->click();
 
-        if (!$this->driver->getCurrentURL() === self::URL_ACCOUNT) {
+        if (count($this->driver->findElements(WebDriverBy::id('espace_client'))) === 0) {
             return false;
         }
 
