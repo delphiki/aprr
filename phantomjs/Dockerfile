@@ -4,4 +4,4 @@ EXPOSE 8643
 
 RUN npm install -g phantomjs
 
-CMD ["phantomjs", "--webdriver=8643"]
+CMD ["phantomjs", "--webdriver=8643", "--loacd-images=no"]
