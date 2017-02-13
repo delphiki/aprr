@@ -60,7 +60,7 @@ class TravelBill implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -68,10 +68,10 @@ class TravelBill implements \JsonSerializable
     }
 
     /**
-     * @param string $date
+     * @param \DateTime $date
      * @return TravelBill
      */
-    public function setDate($date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
 
@@ -293,8 +293,12 @@ class TravelBill implements \JsonSerializable
 
         foreach ($fieldsMatching as $key => $field) {
             if (isset($data[$field])) {
-                $method = sprintf('set%s', ucfirst($key));
+                if ($key === 'date') {
+                    list($ms) = sscanf($data[$field], '/Date(%d)/');
+                    $data[$field] = \DateTime::createFromFormat('U', $ms / 1000);
+                }
 
+                $method = sprintf('set%s', ucfirst($key));
                 $bill->$method($data[$field]);
             }
         }
@@ -309,7 +313,7 @@ class TravelBill implements \JsonSerializable
     {
         return [
             'id' => $this->getId(),
-            'date' => $this->getDate(),
+            'date' => $this->getDate()->format('Y-m-d H:i:s'),
             'entrance' => $this->getEntrance(),
             'entranceCode' => $this->getEntranceCode(),
             'exit' => $this->getExit(),

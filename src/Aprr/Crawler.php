@@ -214,7 +214,6 @@ class Crawler implements \JsonSerializable
 
         foreach ($bills as $bill) {
             $this->addPendingBill(TravelBill::createFromRawData($bill));
-
         }
 
         return $this;
